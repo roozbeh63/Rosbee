@@ -2,7 +2,7 @@
 # license removed for brevity
 import rospy
 from geometry_msgs.msg import Twist
-from SocketInterface import *
+
 
 def talker():
     pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
