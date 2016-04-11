@@ -37,8 +37,10 @@ class Robot(object):
     # Get actual move speed and rotational speed of robot in SI units
     # Reports calculated speed x from motor encoders and robot rotation based on either encoders of gyro depending on gyrobased being true
     def get_movesteer(self, gyrobased):
-        return rbha.get_movesteer(gyrobased)
-
+        if gyrobased:
+            return rbha.get_movesteer(gyrobased)
+        else:
+            return rbha.get_movesteer(None)
     # Move command. Input in SI units. speed in m/s dir in radians per sec
     def drive(self, vx, vth):
         """Drive the robot.
@@ -67,6 +69,7 @@ returns current state, including velocity, as measured by robot using its encode
     # Call this routine from the ROS spin loop to uodate the data from Rosbee to ROS
     def get_update_from_rosbee(self):
         if rbha.isportopen():  # request data from embedded controller at regular intervals
+            #rbha.reader()
             rbha.send(rbha.cmd_get_adc)  # get adc values
             rbha.send(rbha.cmd_get_status)  # get status and errors
             rbha.send(rbha.cmd_get_counters)  # get process counters
@@ -91,7 +94,7 @@ class RobotNode(object):
     def _init_params(self):
 
         # node general
-        self.update_rate = rospy.get_param('~update_rate', 50.0)
+        self.update_rate = rospy.get_param('~update_rate', 50)
         self.verbose = rospy.get_param('~verbose', True)
 
         # fake serial connection to a robot
@@ -280,7 +283,8 @@ class RobotNode(object):
         r = rospy.Rate(self.update_rate)
         while not rospy.is_shutdown():
             current_time = rospy.get_rostime()
-
+            #rbha.handle_get_position()
+            #robot.get_update_from_rosbee()
                   # ACT & SENSE
             if self.req_cmd_vel is not None:
                 req_cmd_vel = self.req_cmd_vel
@@ -299,7 +303,8 @@ class RobotNode(object):
             old_state_time = last_state_time
             old_vel_state = last_vel_state
             self.robot.drive(req_cmd_vel[0], req_cmd_vel[2])
-            last_state = robot.get_movesteer(robot.get_gyro())
+            #last_state = robot.get_movesteer(robot.get_gyro())
+            last_state = robot.get_movesteer(None)
             for key, value in last_state.iteritems():
                 temp = [value]
                 dictToList.append(temp[0])

@@ -199,8 +199,6 @@ def get_movesteer(gyrobased):
         rb1.robot_twist['rot_z'] = rb1.gyroZrad
     else:
         rb1.robot_twist['rot_z'] = rb1.actrotvel_radians
-#    if debug:
-#        print('actual speed : ' + rb1.robot_twist['speed_x'] + ' ' + rb1.robot_twist['rot_z'])
     return rb1.robot_twist
 
 
@@ -487,14 +485,14 @@ def get_connection_info():
 #
 # --------------- initialize program and variables --------------------
 def init_vars():
-    global connected  # , logger
+    global connected #, logger
     # logging.basicConfig(format='%(asctime)s %(message)s')           # initialize logging
     # logging.basicConfig(filename=logfilename,level=logging.INFO)     # open log file for debug
     # logger = logging.getLogger('start log')
 
-    #t = threading.Thread(target=do_update)  # create update thread to read data from wheel module
-    #t.setDaemon(1)
-    #t.start()
+    t = threading.Thread(target=do_update)  # create update thread to read data from wheel module
+    t.setDaemon(1)
+    t.start()
 
 
 #    com.init()    # init UDP port module
@@ -515,9 +513,9 @@ def init_serial():
     r.start()
     print('init serialport' + ' logging to: ' + logfilename)
 
-    #t = threading.Thread(target=do_update)  # create update thread to read data from wheel module
-    #t.setDaemon(1)
-    #t.start()
+    t = threading.Thread(target=do_update)  # create update thread to read data from wheel module
+    t.setDaemon(1)
+    t.start()
 
 
 # ----------------- Serial port handling routines ---------------------------------
@@ -532,7 +530,8 @@ def reader():
                 # print('in raw:' + str(data))
                 if (data[0] == 255):
                     data[0] = 32
-                data_decoded = data.decode('utf-8')  # decode to ascii
+                #data_decoded = data.decode('utf-8')  # decode to ascii
+                data_decoded = data
                 # print('in:' + data_decoded)
                 separate_string(data_decoded)  # parse incoming string into a separated list
 
@@ -628,5 +627,5 @@ def do_update():
             send(cmd_get_position)  # get wheel encoder positions
             send(cmd_get_gyro)  # get gyro data
             sendnewsetpoints()  # send new setpoints to wheels if port open
-        # print('test')
+        #            print('test')
         time.sleep(wm_refreshtime)  # wait refresh time
