@@ -10,14 +10,24 @@ from geometry_msgs.msg import Point, Pose, Pose2D, PoseWithCovariance, \
 from math import sin, cos
 from covariances import \
     ODOM_POSE_COVARIANCE, ODOM_POSE_COVARIANCE2, ODOM_TWIST_COVARIANCE, ODOM_TWIST_COVARIANCE2
+
 PACKAGE = 'rosbee_node'  # this package name
 NAME = 'robot_node'  # this node name
+
 
 class Robot(object):
     # Disable of robot
     def __init__(self):
-        self.open_robot_connection()
-        
+        rbha.open_serial()
+        if rbha.isportopen():
+            rbha.send(rbha.cmd_version)
+            rbha.receive()
+            rbha.send(rbha.cmd_get_adc_labels)
+            rbha.receive()
+            rbha.send(rbha.cmd_conversionfactors)
+            rbha.receive()
+            rbha.send(rbha.cmd_reset_minmax)
+            rbha.receive()
 
     def turn_off(self):
         rbha.disable_robot()
@@ -36,11 +46,15 @@ class Robot(object):
 
     # Get actual move speed and rotational speed of robot in SI units
     # Reports calculated speed x from motor encoders and robot rotation based on either encoders of gyro depending on gyrobased being true
-    def get_movesteer(self, gyrobased):
-        if gyrobased:
-            return rbha.get_movesteer(gyrobased)
+    def get_speed(self, gyrobased):
+        return rbha.get_movesteer(gyrobased)
+
+    def get_speed(self, gyro):
+        if gyro:
+            return rbha.get_movesteer(gyro)
         else:
             return rbha.get_movesteer(None)
+
     # Move command. Input in SI units. speed in m/s dir in radians per sec
     def drive(self, vx, vth):
         """Drive the robot.
@@ -56,27 +70,27 @@ returns current state, including velocity, as measured by robot using its encode
     def close_robot_connection(self):
         rbha.close_serial()
 
-    # Start robot communication
-    def open_robot_connection(self):
-        try:
-            rbha.open_serial()
-        except:
-            print ("error occurred in opening the port")
     def get_gyro(self):
         rbha.handle_report_gyro()
         return rbha.rb1.gyroZrad
 
     # Call this routine from the ROS spin loop to uodate the data from Rosbee to ROS
     def get_update_from_rosbee(self):
-        if rbha.isportopen():  # request data from embedded controller at regular intervals
-            #rbha.reader()
+        if rbha.isportopen():  # request data from embedded controller
             rbha.send(rbha.cmd_get_adc)  # get adc values
+            rbha.receive()
             rbha.send(rbha.cmd_get_status)  # get status and errors
+            rbha.receive()
             rbha.send(rbha.cmd_get_counters)  # get process counters
+            rbha.receive()
             rbha.send(rbha.cmd_get_times)  # get process times
+            rbha.receive()
             rbha.send(rbha.cmd_get_position)  # get wheel encoder positions
+            rbha.receive()
             rbha.send(rbha.cmd_get_gyro)  # get gyro data
+            rbha.receive()
             rbha.sendnewsetpoints()  # send new setpoints to wheels if port open
+            rbha.receive()
 
 
 class RobotNode(object):
@@ -89,7 +103,6 @@ class RobotNode(object):
         self._init_params()
         self._init_pubsub()
         self.spin()
-
 
     def _init_params(self):
 
@@ -166,32 +179,44 @@ class RobotNode(object):
             # Convert twist to velocity setpoint
         # Assume robot drives in 2-dimensional world
         self.req_cmd_vel = msg.linear.x, msg.linear.y, msg.angular.z
-        #self.robot.drive(msg.linear.x, msg.angular.z)
+        # self.robot.drive(msg.linear.x, msg.angular.z)
+
+    def average_vel(self, old_vel, current_vel):
+        dictToList = []
+        for key, value in current_vel.iteritems():
+            temp = [value]
+            dictToList.append(temp[0])
+        vel = (dictToList[1], 0, dictToList[0])
+        avg_vel = tuple((float(x) + float(y)) / 2 for x, y in zip(old_vel, vel))
+        return avg_vel
+
 
     def compute_imu(self):
         orientation_covariance = [
-        0.0025 , 0 , 0,
-        0, 0.0025, 0,
-        0, 0, 0.0025
+            0.0025, 0, 0,
+            0, 0.0025, 0,
+            0, 0, 0.0025
         ]
         # Angular velocity covariance estimation:
         # Observed gyro noise: 4 counts => 0.28 degrees/sec
         # nonlinearity spec: 0.2% of full scale => 8 degrees/sec = 0.14 rad/sec
         # Choosing the larger (0.14) as std dev, variance = 0.14^2 ~= 0.02
         angular_velocity_covariance = [
-        0.02, 0 , 0,
-        0 , 0.02, 0,
-        0 , 0 , 0.02
+            0.02, 0, 0,
+            0, 0.02, 0,
+            0, 0, 0.02
         ]
         # linear acceleration covariance estimation:
         # observed acceleration noise: 5 counts => 20milli-G's ~= 0.2m/s^2
         # nonliniarity spec: 0.5% of full scale => 0.2m/s^2
         # Choosing 0.2 as std dev, variance = 0.2^2 = 0.04
         linear_acceleration_covariance = [
-        0.04 , 0 , 0,
-        0 , 0.04, 0,
-        0 , 0 , 0.04
+            0.04, 0, 0,
+            0, 0.04, 0,
+            0, 0, 0.04
         ]
+
+
     def compute_odom(self, velocities, last_time, current_time, odom):
         """
         Compute current odometry.  Updates odom instance and returns tf
@@ -263,6 +288,7 @@ class RobotNode(object):
         # return the transform
         return transform
 
+
     def publish_odometry_transform(self, odometry):
         self.transform_broadcaster.sendTransform(
             (odometry.pose.pose.position.x, odometry.pose.pose.position.y, odometry.pose.pose.position.z),
@@ -277,15 +303,13 @@ class RobotNode(object):
         transform = None
         last_state_time = rospy.get_rostime()
         last_vel_state = (0.0, 0.0, 0.0)
-        dictToList = []
         req_cmd_vel = (0.0, 0.0, 0.0)
         last_cmd_vel_time = rospy.get_rostime()
         r = rospy.Rate(self.update_rate)
         while not rospy.is_shutdown():
             current_time = rospy.get_rostime()
-            #rbha.handle_get_position()
-            #robot.get_update_from_rosbee()
-                  # ACT & SENSE
+            robot.get_update_from_rosbee()
+            # ACT & SENSE
             if self.req_cmd_vel is not None:
                 req_cmd_vel = self.req_cmd_vel
                 # set to None to signal that command is handled
@@ -293,41 +317,36 @@ class RobotNode(object):
                 # reset time for timeout
                 last_cmd_vel_time = current_time
             else:
-                #stop on timeout
+                # stop on timeout
                 if current_time - last_cmd_vel_time > self.cmd_vel_timeout:
-                  req_cmd_vel = (0.0, 0.0, 0.0)
-                  if self.verbose:
-                    rospy.loginfo('timeout')
+                    req_cmd_vel = (0.0, 0.0, 0.0)
+                    if self.verbose:
+                        rospy.loginfo('timeout')
 
-                  # send velocity command & receive state
+                        # send velocity command & receive state
             old_state_time = last_state_time
             old_vel_state = last_vel_state
             self.robot.drive(req_cmd_vel[0], req_cmd_vel[2])
-            #last_state = robot.get_movesteer(robot.get_gyro())
-            last_state = robot.get_movesteer(None)
-            for key, value in last_state.iteritems():
-                temp = [value]
-                dictToList.append(temp[0])
-            last_vel_state = (dictToList[1], 0, dictToList[0])
+            last_state_gyro = robot.get_speed(robot.get_gyro())
+            last_state = robot.get_speed(None)
             last_state_time = current_time
-
             # COMPUTE ODOMETRY
             # use average velocity, i.e. assume constant acceleration
-            avg_vel_state = tuple((float(x) + float(y))/2 for x, y in zip(old_vel_state, last_vel_state))
+            avg_vel_state = self.average_vel(old_vel_state, last_state)
             transform = self.compute_odom(avg_vel_state, old_state_time, last_state_time, odom)
             # PUBLISH ODOMETRY
             self.odom_pub.publish(odom)
             self.imu_pub.publish(imu)
             if self.publish_tf:
-              self.publish_odometry_transform(odom)
+                self.publish_odometry_transform(odom)
 
             if self.verbose:
                 rospy.loginfo("velocity setpoint: %s", str(req_cmd_vel))
                 rospy.loginfo("velocity measured: %s", str(last_vel_state))
                 rospy.loginfo("pose: %s", str(transform))
 
-
             r.sleep()
+
 
 if __name__ == '__main__':
     robot = Robot()

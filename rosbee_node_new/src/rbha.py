@@ -4,6 +4,7 @@
 # holds a class representing the hardware model and status
 
 # import section
+from __future__ import unicode_literals, absolute_import, print_function, division
 import serial
 import threading
 import time
@@ -518,27 +519,31 @@ def init_serial():
     t.start()
 
 
+def receive():
+    global ser
+    data = ser.readline()
+    if len(data) > 0:
+        # print('in raw:' + str(data))
+        if (data[0] == 255):
+            data[0] = 32
+        data_decoded = data.decode('utf-8')  # decode to ascii
+        # print('in:' + data_decoded)
+        separate_string(data_decoded)  # parse incoming string
+
 # ----------------- Serial port handling routines ---------------------------------
 # thread function reading lines from comport
 def reader():
     global connected, ser
     # loop forever and copy serial->console
-    while 1:
-        if (connected):
-            data = ser.readline()
-            if len(data) > 0:
-                # print('in raw:' + str(data))
-                if (data[0] == 255):
-                    data[0] = 32
-                #data_decoded = data.decode('utf-8')  # decode to ascii
-                data_decoded = data
-                # print('in:' + data_decoded)
-                separate_string(data_decoded)  # parse incoming string into a separated list
+    #while 1:
+    if (connected):
+        receive()
+
 
 
 def open_serial():
     global logger, ser, connected
-    init_serial()  # init serial port
+    #init_serial()  # init serial port
     ''' open serial port with timeout '''
     serialconfig = comportconfig_support.Readconfig()
     print(serialconfig)
@@ -549,7 +554,7 @@ def open_serial():
     connected = True
     #    logger.info('serial port open ' + serialconfig['comport'] + ' ' + serialconfig['baudrate'] )
     print('serial port open ' + serialconfig['comport'] + ' ' + serialconfig['baudrate'])
-    run_once()  # run some commands at the start of communication to get version, labels, etc from power module
+    #run_once()  # run some commands at the start of communication to get version, labels, etc from power module
 
 
 def close_serial():
