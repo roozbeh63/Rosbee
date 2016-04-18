@@ -46,14 +46,21 @@ class Robot(object):
 
     # Get actual move speed and rotational speed of robot in SI units
     # Reports calculated speed x from motor encoders and robot rotation based on either encoders of gyro depending on gyrobased being true
-    def get_speed(self, gyrobased):
-        return rbha.get_movesteer(gyrobased)
 
     def get_speed(self, gyro):
         if gyro:
-            return rbha.get_movesteer(gyro)
+            vel = rbha.get_movesteer(gyro)
         else:
-            return rbha.get_movesteer(None)
+            vel = rbha.get_movesteer(None)
+        dictToList = []
+        for key, value in vel.iteritems():
+            temp = [value]
+            dictToList.append(temp[0])
+        if dictToList[0] <= 0:
+            dictToList[0] = 0.0
+
+        vel = (dictToList[1], 0, dictToList[0])
+        return vel
 
     # Move command. Input in SI units. speed in m/s dir in radians per sec
     def drive(self, vx, vth):
@@ -71,7 +78,6 @@ returns current state, including velocity, as measured by robot using its encode
         rbha.close_serial()
 
     def get_gyro(self):
-        rbha.handle_report_gyro()
         return rbha.rb1.gyroZrad
 
     # Call this routine from the ROS spin loop to uodate the data from Rosbee to ROS
@@ -182,40 +188,21 @@ class RobotNode(object):
         # self.robot.drive(msg.linear.x, msg.angular.z)
 
     def average_vel(self, old_vel, current_vel):
-        dictToList = []
-        for key, value in current_vel.iteritems():
-            temp = [value]
-            dictToList.append(temp[0])
-        vel = (dictToList[1], 0, dictToList[0])
-        avg_vel = tuple((float(x) + float(y)) / 2 for x, y in zip(old_vel, vel))
+        avg_vel = tuple((float(x) + float(y)) / 2 for x, y in zip(old_vel, current_vel))
         return avg_vel
 
 
-    def compute_imu(self):
-        orientation_covariance = [
-            0.0025, 0, 0,
-            0, 0.0025, 0,
-            0, 0, 0.0025
-        ]
-        # Angular velocity covariance estimation:
-        # Observed gyro noise: 4 counts => 0.28 degrees/sec
-        # nonlinearity spec: 0.2% of full scale => 8 degrees/sec = 0.14 rad/sec
-        # Choosing the larger (0.14) as std dev, variance = 0.14^2 ~= 0.02
-        angular_velocity_covariance = [
-            0.02, 0, 0,
-            0, 0.02, 0,
-            0, 0, 0.02
-        ]
-        # linear acceleration covariance estimation:
-        # observed acceleration noise: 5 counts => 20milli-G's ~= 0.2m/s^2
-        # nonliniarity spec: 0.5% of full scale => 0.2m/s^2
-        # Choosing 0.2 as std dev, variance = 0.2^2 = 0.04
-        linear_acceleration_covariance = [
-            0.04, 0, 0,
-            0, 0.04, 0,
-            0, 0, 0.04
-        ]
-
+    def compute_imu(self, velocities, last_time, current_time, imu):
+        dt = (current_time - last_time).to_sec()
+        vx, vy, vth = velocities
+        angle = (vth * dt) * self.odom_angular_scale_correction  # correction factor from calibration
+        imu.header.stamp = current_time
+        imu.linear_acceleration.x = 0
+        imu.linear_acceleration.y = 0
+        imu.linear_acceleration.z = 0
+        imu.angular_velocity.x = angle
+        imu.angular_velocity.x = 0
+        imu.angular_velocity.x = 0
 
     def compute_odom(self, velocities, last_time, current_time, odom):
         """
@@ -299,10 +286,11 @@ class RobotNode(object):
 
     def spin(self):
         odom = Odometry(header=rospy.Header(frame_id=self.odom_frame), child_frame_id=self.base_frame)
-        imu = Imu()
+        imu = Imu(header=rospy.Header(frame_id=self.odom_frame))
         transform = None
         last_state_time = rospy.get_rostime()
         last_vel_state = (0.0, 0.0, 0.0)
+        last_gyro_state = (0.0, 0.0, 0.0)
         req_cmd_vel = (0.0, 0.0, 0.0)
         last_cmd_vel_time = rospy.get_rostime()
         r = rospy.Rate(self.update_rate)
@@ -323,16 +311,20 @@ class RobotNode(object):
                     if self.verbose:
                         rospy.loginfo('timeout')
 
-                        # send velocity command & receive state
+            # send velocity command & receive state
             old_state_time = last_state_time
             old_vel_state = last_vel_state
+            old_vel_state_gyro = last_gyro_state
             self.robot.drive(req_cmd_vel[0], req_cmd_vel[2])
-            last_state_gyro = robot.get_speed(robot.get_gyro())
+            last_gyro_state = robot.get_speed(robot.get_gyro())
             last_state = robot.get_speed(None)
             last_state_time = current_time
+            last_vel_state = last_state
             # COMPUTE ODOMETRY
             # use average velocity, i.e. assume constant acceleration
             avg_vel_state = self.average_vel(old_vel_state, last_state)
+            avg_vel_state_gyro = self.average_vel(old_vel_state_gyro, last_gyro_state)
+            self.compute_imu(avg_vel_state_gyro, old_state_time, last_state_time, imu)
             transform = self.compute_odom(avg_vel_state, old_state_time, last_state_time, odom)
             # PUBLISH ODOMETRY
             self.odom_pub.publish(odom)

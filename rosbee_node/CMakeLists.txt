@@ -7,6 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   tf
+  message_generation
 )
 
 ###################################
@@ -17,6 +18,19 @@ catkin_package(
 #  LIBRARIES rosbee_node
 #  CATKIN_DEPENDS geometry_msgs nav_msgs rospy std_msgs tf
 #  DEPENDS system_lib
+)
+
+add_message_files(
+   FILES
+   BatteryStatus.msg
+   NetworkStatus.msg
+   SysInfo.msg
+   SystemStatus.msg
+ )
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
 )
 
 ###########
