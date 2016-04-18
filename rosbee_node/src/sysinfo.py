@@ -1,8 +1,8 @@
 import rospy
 import roslib
 from std_msgs.msg import Float32
-roslib.load_manifest("rosbee_node")
-from 
+from std_msgs.msg import String
+from rosbee_node.msg import BatteryStatus, NetworkStatus
 from diagnostic_msgs.msg import DiagnosticStatus, DiagnosticArray, KeyValue
 
 class SystemInfo(object):

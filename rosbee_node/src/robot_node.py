@@ -113,7 +113,7 @@ class RobotNode(object):
     def _init_params(self):
 
         # node general
-        self.update_rate = rospy.get_param('~update_rate', 50)
+        self.update_rate = rospy.get_param('~update_rate', 10)
         self.verbose = rospy.get_param('~verbose', True)
 
         # fake serial connection to a robot
