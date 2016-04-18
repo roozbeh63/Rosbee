@@ -4,107 +4,25 @@ import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Imu
 import tf
-import rbha
 from geometry_msgs.msg import Point, Pose, Pose2D, PoseWithCovariance, \
     Quaternion, Twist, TwistWithCovariance, Vector3
 from math import sin, cos
 from covariances import \
     ODOM_POSE_COVARIANCE, ODOM_POSE_COVARIANCE2, ODOM_TWIST_COVARIANCE, ODOM_TWIST_COVARIANCE2
-
+import rosinterface
 PACKAGE = 'rosbee_node'  # this package name
 NAME = 'robot_node'  # this node name
 
 
-class Robot(object):
-    # Disable of robot
-    def __init__(self):
-        rbha.open_serial()
-        if rbha.isportopen():
-            rbha.send(rbha.cmd_version)
-            rbha.receive()
-            rbha.send(rbha.cmd_get_adc_labels)
-            rbha.receive()
-            rbha.send(rbha.cmd_conversionfactors)
-            rbha.receive()
-            rbha.send(rbha.cmd_reset_minmax)
-            rbha.receive()
-
-    def turn_off(self):
-        rbha.disable_robot()
-
-    # Enable of robot
-    def turn_on(self):
-        rbha.do_enable()
-
-    # request robot enable status. Returns true if enabled and false if disabled
-    def request_status(self):
-        return rbha.request_enable_status()
-
-    # request alarm bit status of robot. Returns true if any alarm set
-    def request_alarm(self):
-        return rbha.request_alarm()
-
-    # Get actual move speed and rotational speed of robot in SI units
-    # Reports calculated speed x from motor encoders and robot rotation based on either encoders of gyro depending on gyrobased being true
-
-    def get_speed(self, gyro):
-        if gyro:
-            vel = rbha.get_movesteer(gyro)
-        else:
-            vel = rbha.get_movesteer(None)
-        dictToList = []
-        for key, value in vel.iteritems():
-            temp = [value]
-            dictToList.append(temp[0])
-        if dictToList[0] <= 0:
-            dictToList[0] = 0.0
-
-        vel = (dictToList[1], 0, dictToList[0])
-        return vel
-
-    # Move command. Input in SI units. speed in m/s dir in radians per sec
-    def drive(self, vx, vth):
-        """Drive the robot.
-@param cmd_vel: velocity setpoint = (vx, vy, vth)
-      vx:  linear velocity along the x-axis (m/s)
-      vy:  linear velocity along the y-axis (m/s)
-      vth: angular velocity about the z-axis (rad/s), also called yaw
-returns current state, including velocity, as measured by robot using its encoders
-"""
-        rbha.do_movesteer_int(vx, vth)
-
-    # Stop robot communication
-    def close_robot_connection(self):
-        rbha.close_serial()
-
-    def get_gyro(self):
-        return rbha.rb1.gyroZrad
-
-    # Call this routine from the ROS spin loop to uodate the data from Rosbee to ROS
-    def get_update_from_rosbee(self):
-        if rbha.isportopen():  # request data from embedded controller
-            rbha.send(rbha.cmd_get_adc)  # get adc values
-            rbha.receive()
-            rbha.send(rbha.cmd_get_status)  # get status and errors
-            rbha.receive()
-            rbha.send(rbha.cmd_get_counters)  # get process counters
-            rbha.receive()
-            rbha.send(rbha.cmd_get_times)  # get process times
-            rbha.receive()
-            rbha.send(rbha.cmd_get_position)  # get wheel encoder positions
-            rbha.receive()
-            rbha.send(rbha.cmd_get_gyro)  # get gyro data
-            rbha.receive()
-            rbha.sendnewsetpoints()  # send new setpoints to wheels if port open
-            rbha.receive()
 
 
 class RobotNode(object):
-    def __init__(self, name, robot):
-        self.robot = robot
+    def __init__(self, name):
+        self.robot = rosinterface
+        self.robot.init_robot()
         rospy.init_node(name, anonymous=True)
         self.req_cmd_vel = None
-        self.robot.turn_on()
+        self.robot.enable_robot()
         self._pos2d = Pose2D()
         self._init_params()
         self._init_pubsub()
@@ -113,7 +31,7 @@ class RobotNode(object):
     def _init_params(self):
 
         # node general
-        self.update_rate = rospy.get_param('~update_rate', 10)
+        self.update_rate = rospy.get_param('~update_rate', 5)
         self.verbose = rospy.get_param('~verbose', True)
 
         # fake serial connection to a robot
@@ -296,7 +214,7 @@ class RobotNode(object):
         r = rospy.Rate(self.update_rate)
         while not rospy.is_shutdown():
             current_time = rospy.get_rostime()
-            robot.get_update_from_rosbee()
+            self.robot.get_update_from_rosbee()
             # ACT & SENSE
             if self.req_cmd_vel is not None:
                 req_cmd_vel = self.req_cmd_vel
@@ -315,9 +233,9 @@ class RobotNode(object):
             old_state_time = last_state_time
             old_vel_state = last_vel_state
             old_vel_state_gyro = last_gyro_state
-            self.robot.drive(req_cmd_vel[0], req_cmd_vel[2])
-            last_gyro_state = robot.get_speed(robot.get_gyro())
-            last_state = robot.get_speed(None)
+            self.robot.do_movesteer(req_cmd_vel[0], req_cmd_vel[2])
+            last_gyro_state = self.robot.get_movesteer(self.robot.get_gyro())
+            last_state = self.robot.get_movesteer(None)
             last_state_time = current_time
             last_vel_state = last_state
             # COMPUTE ODOMETRY
@@ -341,10 +259,9 @@ class RobotNode(object):
 
 
 if __name__ == '__main__':
-    robot = Robot()
     rospy.loginfo("%s started...", NAME)
     try:
-        RobotNode(NAME, robot)
+        RobotNode(NAME)
     except rospy.ROSInterruptException, err:
         rospy.loginfo(str(err))
         rospy.loginfo("%s stopped working...", NAME)

@@ -1,27 +1,29 @@
 import rospy
-import roslib
 from std_msgs.msg import Float32
-from std_msgs.msg import String
-from rosbee_node.msg import BatteryStatus, NetworkStatus
+#from rosbee_node.msg import BatteryStatus, NetworkStatus, SysInfo, SystemStatus
 from diagnostic_msgs.msg import DiagnosticStatus, DiagnosticArray, KeyValue
-
+import rosinterface
 class SystemInfo(object):
     def __init__(self):
+        robot = rosinterface
+        robot.init_robot()
+        robot.enable_robot()
         self.stat_bat_pc = []
         self.stat_network = []
         self.stat_system = []
         rospy.init_node("sysinfo")
-        pub_diagnostics = rospy.Publisher('/diagnostics', DiagnosticArray)
+        pub_diagnostics = rospy.Publisher('/diagnostics', DiagnosticArray, queue_size=10)
         diag_msg = DiagnosticArray()
         self.update_rate = rospy.get_param('~update_rate', 50)
         r = rospy.Rate(self.update_rate)
         while not rospy.is_shutdown():
+            robot.get_update_from_rosbee()
             diag_msg.header.stamp = rospy.Time.now()
             diag_msg.status.append(self.stat_bat_pc)
             diag_msg.status.append(self.stat_network)
             diag_msg.status.append(self.stat_system)
             pub_diagnostics.publish(diag_msg)
-
+            print (robot.request_enable_status())
             r.sleep()
 
     def battery_base_status(self):

@@ -535,9 +535,9 @@ def receive():
 def reader():
     global connected, ser
     # loop forever and copy serial->console
-    #while 1:
-    if (connected):
-        receive()
+    while 1:
+        if (connected):
+            receive()
 
 
 
