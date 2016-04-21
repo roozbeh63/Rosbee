@@ -31,7 +31,7 @@ class RobotNode(object):
     def _init_params(self):
 
         # node general
-        self.update_rate = rospy.get_param('~update_rate', 5)
+        self.update_rate = rospy.get_param('~update_rate', 50)
         self.verbose = rospy.get_param('~verbose', True)
 
         # fake serial connection to a robot
@@ -205,6 +205,7 @@ class RobotNode(object):
     def spin(self):
         odom = Odometry(header=rospy.Header(frame_id=self.odom_frame), child_frame_id=self.base_frame)
         imu = Imu(header=rospy.Header(frame_id=self.odom_frame))
+        self.robot.get_update_from_rosbee()
         transform = None
         last_state_time = rospy.get_rostime()
         last_vel_state = (0.0, 0.0, 0.0)
@@ -254,7 +255,8 @@ class RobotNode(object):
                 rospy.loginfo("velocity setpoint: %s", str(req_cmd_vel))
                 rospy.loginfo("velocity measured: %s", str(last_vel_state))
                 rospy.loginfo("pose: %s", str(transform))
-
+            print ("test status")
+            print (self.robot.get_status())
             r.sleep()
 
 
