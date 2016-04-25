@@ -14,15 +14,8 @@ class error_state(object):
 # Opens serial port, initializes hardware abstraction and executes run once commands
 def init_robot():
     rbha.open_serial()
-    if rbha.isportopen():
-        rbha.send(rbha.cmd_version)
-        rbha.receive()
-        rbha.send(rbha.cmd_get_adc_labels)
-        rbha.receive()
-        rbha.send(rbha.cmd_conversionfactors)
-        rbha.receive()
-        rbha.send(rbha.cmd_reset_minmax)
-        rbha.receive()
+    rbha.enable_robot()
+
 
 
 # Get actual move speed and rotational speed of robot in SI units
@@ -45,17 +38,15 @@ def get_movesteer(gyro):
 
 
 # Move command. Input in SI units. speed in m/s dir in radians per sec
-def set_movesteer(vx, vth):
+def do_movesteer(vx, vth):
     """Drive the robot.
-@param cmd_vel: velocity setpoint = (vx, vy, vth)'
+@param cmd_vel: velocity setpoint = (vx, vy, vth)
   vx:  linear velocity along the x-axis (m/s)
   vy:  linear velocity along the y-axis (m/s)
   vth: angular velocity about the z-axis (rad/s), also called yaw
 returns current state, including velocity, as measured by robot using its encoders
 """
-    rbha.rb1.setspeed = vx
-    rbha.rb1.setsteer = vth
-
+    rbha.do_movesteer_int(vx, vth)
 
 
 def get_gyro():
@@ -65,20 +56,7 @@ def get_gyro():
 # Call this routine from the ROS spin loop to uodate the data from Rosbee to ROS
 def get_update_from_rosbee():
     if rbha.isportopen():  # request data from embedded controller
-        rbha.send(rbha.cmd_get_adc)  # get adc values
-        rbha.receive()
-        rbha.send(rbha.cmd_get_status)  # get status and errors
-        rbha.receive()
-        rbha.send(rbha.cmd_get_counters)  # get process counters
-        rbha.receive()
-        rbha.send(rbha.cmd_get_times)  # get process times
-        rbha.receive()
-        rbha.send(rbha.cmd_get_position)  # get wheel encoder positions
-        rbha.receive()
-        rbha.send(rbha.cmd_get_gyro)  # get gyro data
-        rbha.receive()
-        rbha.sendnewsetpoints()  # send new setpoints to wheels if port open
-        rbha.receive()
+        rbha.do_update()
 
 
 # Disable of robot

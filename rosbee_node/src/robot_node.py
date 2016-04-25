@@ -10,6 +10,7 @@ from math import sin, cos
 from covariances import \
     ODOM_POSE_COVARIANCE, ODOM_POSE_COVARIANCE2, ODOM_TWIST_COVARIANCE, ODOM_TWIST_COVARIANCE2
 import rosinterface
+import test3
 PACKAGE = 'rosbee_node'  # this package name
 NAME = 'robot_node'  # this node name
 
@@ -31,7 +32,7 @@ class RobotNode(object):
     def _init_params(self):
 
         # node general
-        self.update_rate = rospy.get_param('~update_rate', 50)
+        self.update_rate = rospy.get_param('~update_rate', 10)
         self.verbose = rospy.get_param('~verbose', True)
 
         # fake serial connection to a robot
@@ -113,12 +114,11 @@ class RobotNode(object):
     def compute_imu(self, velocities, last_time, current_time, imu):
         dt = (current_time - last_time).to_sec()
         vx, vy, vth = velocities
-        angle = (vth * dt) * self.odom_angular_scale_correction  # correction factor from calibration
         imu.header.stamp = current_time
         imu.linear_acceleration.x = 0
         imu.linear_acceleration.y = 0
         imu.linear_acceleration.z = 0
-        imu.angular_velocity.x = angle
+        imu.angular_velocity.x = vth
         imu.angular_velocity.x = 0
         imu.angular_velocity.x = 0
 
@@ -234,7 +234,7 @@ class RobotNode(object):
             old_state_time = last_state_time
             old_vel_state = last_vel_state
             old_vel_state_gyro = last_gyro_state
-            self.robot.do_movesteer(req_cmd_vel[0], req_cmd_vel[2])
+            self.robot.set_movesteer(req_cmd_vel[0], req_cmd_vel[2])
             last_gyro_state = self.robot.get_movesteer(self.robot.get_gyro())
             last_state = self.robot.get_movesteer(None)
             last_state_time = current_time
