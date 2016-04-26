@@ -16,8 +16,8 @@ def api_root():
 @app.route('/speed')
 def get_speed():
     global vx, vth
-    vx = request.args['vx']
-    vth = request.args['vth']
+    vx = request.args['vx']/10
+    vth = request.args['vth']/10
     data = {
         'vx'  : vx,
         'vth' : vth
@@ -51,7 +51,8 @@ def set_speed():
     rate = rospy.Rate(10) # 10hz
     while not rospy.is_shutdown():
         msg = Twist()
-        msg.linear.x = int(vx)
+        #msg.linear.x = int(vx)
+        msg.linear.x = 0.1
         msg.linear.y = 0
         msg.linear.z = 0
         msg.angular.x = 0

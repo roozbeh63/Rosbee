@@ -195,7 +195,8 @@ def do_enable():  # enable motion
 # Get actual move speed and rotational speed of robot in SI units
 # Reports calculated speed x from motor encoders and robot rotation based on either encoders of gyro depending on gyrobased being true
 def get_movesteer(gyrobased):
-    rb1.robot_twist['speed_x'] = rb1.actplatformspeed
+    #rb1.robot_twist['speed_x'] = rb1.actplatformspeed
+    rb1.robot_twist['speed_x'] = rb1.actplatformspeed_m_per_sec
     if gyrobased:
         rb1.robot_twist['rot_z'] = rb1.gyroZrad
     else:
