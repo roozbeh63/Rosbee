@@ -3,8 +3,8 @@
 <launch>
   <!-- The Robot Node -->
   <node pkg="rosbee_node" type="robot_node.py" name="rosbee_node" respawn="true" output="screen">
-    <param name="verbose" value="false"/>
-    <param name="update_rate" value="50"/>
+    <!--<param name="verbose" value="false"/>
+    <param name="update_rate" value="10"/>
     <param name="fake_connection" value="false"/>
     <param name="fake_respons" value="false"/>
     <param name="port" value="/dev/ttyUSB0"/> 
@@ -17,7 +17,7 @@
     <param name="odom_frame" value="odom"/> 
     <param name="base_frame" value="base_footprint"/>
     <param name="odom_angular_scale_correction" value="1.0"/>
-    <param name="odom_linear_scale_correction" value="1.0"/>
+    <param name="odom_linear_scale_correction" value="1.0"/>-->
 	<!--<remap from="cmd_vel" to="mobile_base/commands/velocity" />-->
   </node>
 

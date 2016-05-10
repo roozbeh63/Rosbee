@@ -80,7 +80,6 @@ def get_update_from_rosbee():
         rbha.sendnewsetpoints()  # send new setpoints to wheels if port open
         rbha.receive()
 
-
 # Disable of robot
 def disable_robot():
     rbha.disable_robot()

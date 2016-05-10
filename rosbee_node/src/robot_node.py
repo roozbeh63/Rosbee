@@ -1,4 +1,4 @@
-# !/usr/bin/env python
+#!/usr/bin/env python
 from nav_msgs.msg import Odometry
 import rospy
 from geometry_msgs.msg import Twist
@@ -256,7 +256,7 @@ class RobotNode(object):
                 rospy.loginfo("velocity measured: %s", str(last_vel_state))
                 rospy.loginfo("pose: %s", str(transform))
             print ("test status")
-            print (self.robot.get_status())
+            #print (self.robot.get_status())
             r.sleep()
 
 

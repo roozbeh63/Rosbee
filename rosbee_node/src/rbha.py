@@ -31,7 +31,7 @@ class trb():
     pf_gyroX = 0  # measured platform rotation from gyro
     pf_gyroY = 0
     pf_gyroZ = 0
-
+    actplatformspeed_m_per_sec = 0
     # vars for speed and rotation calculations for platform
     gyroZ = 0.0  # gyro calculated angle in degree per second
     gyroZrad = 0.0  # Gyro calculated angle in radians per second
