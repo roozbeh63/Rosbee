@@ -99,7 +99,7 @@ class trb():
 
 # ---------- global variable with initialisation if needed -----
 rb1 = trb()  # create instance of wheel module
-debug = True  # set debugging info  on and off
+debug = False  # set debugging info  on and off
 
 connected = False
 serial_free = True  # semaphore for serialport to avoid collisions from various processes
@@ -210,6 +210,8 @@ def do_movesteer(speed, rot_z):
     intspeed = int(speed * rb1.meterpersec_to_countsperpid)
     intdir = int(rot_z * rb1.radianspersec_to_dir)
     send(cmd_move + ',' + str(intspeed) + ',' + str(intdir))
+    print ("do movesteer speed")
+    print (str(intspeed))
     if debug:
         print('cmd_move speed:' + str(speed) + ',' + str(intspeed) + ' dir:' + str(rot_z) + ',' + str(
             intdir) + ' fact ' + str(rb1.meterpersec_to_countsperpid) + ' ' + str(rb1.radianspersec_to_dir))
@@ -523,6 +525,8 @@ def init_serial():
 def receive():
     global ser
     data = ser.readline()
+    print ("receving data")
+    print (data)
     if len(data) > 0:
         # print('in raw:' + str(data))
         if (data[0] == 255):
@@ -569,12 +573,13 @@ def send(linput):
     global serial_free
     # while serial_free:        # wait for release of serial port
     #     continue
-
     outstr = linput + '\r\n'  # add cr lf to string
     serial_free = False
     str = linput + '\r\n'  # add cr lf to string
     # print('ser ' + linput)
     ser.write(outstr.encode('utf-8'))
+    print ("sending data")
+    print (outstr)
     serial_free = True
 
     # print("out> " + outstr )
@@ -596,7 +601,8 @@ def sendnewsetpoints():
     if debug:
         print('new steer speed ' + str(rb1.enable))
     if rb1.enable:
-        # print(str(rb1.setspeed) + ' ' + str(rb1.setsteer))
+        print ("sendnewsetpoints")
+        print (rb1.setspeed)
         do_movesteer(rb1.setspeed, rb1.setsteer)
         rb1.oldsetspeed = rb1.setspeed
         rb1.oldsetpos = rb1.setsteer

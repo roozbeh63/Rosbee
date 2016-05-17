@@ -53,28 +53,45 @@ def send_receive(ser, command):
     if len(data) > 0:
       waiting = False
   return data
-start = int(round(time.time() * 1000))
-#ser.send("$0")
-#ser.send("$1")
-ser = SerialInterface("/dev/ttyUSB0", "115200")
-data = send_receive(ser, "$29")
-print("version ", data)
-for i in range(1):
-  data = send_receive(ser, "$10")
-  print(data)
-  data = send_receive(ser, "$11")
-  print(data)
-  data = send_receive(ser, "$59")
-  print(data)
-  data = send_receive(ser, "$58")
-  print(data)
-  data = send_receive(ser, "$14")
-  print(data)
-  data = send_receive(ser, "$15")
-  print(data)
-  data = send_receive(ser, "$2, 4, 0")
-  print(data)
-end = int(round(time.time() * 1000))
-print (end - start)
 
 
+class robot(object):
+  def __init__(self):
+    start = int(round(time.time() * 1000))
+    #ser.send("$0")
+    #ser.send("$1")
+    self.ser = SerialInterface("/dev/ttyUSB0", "115200")
+    data = send_receive(self.ser, "$29")
+    data = send_receive(self.ser, "$10")
+    print(data)
+    data = send_receive(self.ser, "$11")
+    print(data)
+    data = send_receive(self.ser, "$59")
+    print(data)
+    data = send_receive(self.ser, "$58")
+    print(data)
+    data = send_receive(self.ser, "$14")
+    print(data)
+    data = send_receive(self.ser, "$15")
+    print(data)
+    data = send_receive(self.ser, "$2, 8, 0")
+    print(data)
+
+
+
+  def send_speed(self, speed):
+    data = send_receive(self.ser, "$29")
+    data = send_receive(self.ser, "$10")
+    print(data)
+    data = send_receive(self.ser, "$11")
+    print(data)
+    data = send_receive(self.ser, "$59")
+    print(data)
+    data = send_receive(self.ser, "$58")
+    print(data)
+    data = send_receive(self.ser, "$14")
+    print(data)
+    data = send_receive(self.ser, "$15")
+    print(data)
+    data = send_receive(self.ser, "$2, 8, 0")
+    print(data)

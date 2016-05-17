@@ -81,7 +81,7 @@ class RobotNode(object):
     def _init_pubsub(self):
         self.odom_pub = rospy.Publisher('odom', Odometry, queue_size=10)
         self.imu_pub = rospy.Publisher('imu', Imu, queue_size=10)
-        self.cmd_vel_sub = rospy.Subscriber('cmd_vel', Twist, self.cmd_vel)
+        self.cmd_vel_sub = rospy.Subscriber('/cmd_vel', Twist, self.cmd_vel)
         self.transform_broadcaster = None
         if self.publish_tf:
             self.transform_broadcaster = tf.TransformBroadcaster()
@@ -89,7 +89,6 @@ class RobotNode(object):
     def cmd_vel(self, msg):
         # Clamp to min abs yaw velocity, to avoid trying to rotate at low
         # speeds, which doesn't work well.
-
         if self.min_abs_yaw_vel is not None and \
                         msg.angular.z != 0.0 and \
                         abs(msg.angular.z) < self.min_abs_yaw_vel:
@@ -255,8 +254,6 @@ class RobotNode(object):
                 rospy.loginfo("velocity setpoint: %s", str(req_cmd_vel))
                 rospy.loginfo("velocity measured: %s", str(last_vel_state))
                 rospy.loginfo("pose: %s", str(transform))
-            print ("test status")
-            #print (self.robot.get_status())
             r.sleep()
 
 

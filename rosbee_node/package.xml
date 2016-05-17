@@ -25,7 +25,7 @@
   <run_depend>rospy</run_depend>
   <run_depend>std_msgs</run_depend>
   <run_depend>tf</run_depend>
-
+  <run_depend>rosbee_note</run_depend>
   <export>
   </export>
 </package>

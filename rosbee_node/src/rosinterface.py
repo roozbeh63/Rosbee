@@ -53,6 +53,7 @@ def set_movesteer(vx, vth):
   vth: angular velocity about the z-axis (rad/s), also called yaw
 returns current state, including velocity, as measured by robot using its encoders
 """
+
     rbha.rb1.setspeed = vx
     rbha.rb1.setsteer = vth
 
@@ -79,6 +80,7 @@ def get_update_from_rosbee():
         rbha.receive()
         rbha.sendnewsetpoints()  # send new setpoints to wheels if port open
         rbha.receive()
+
 
 # Disable of robot
 def disable_robot():
