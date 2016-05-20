@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+
 import rbha
 import bits
+import comportconfig_support
 import threading
 
 

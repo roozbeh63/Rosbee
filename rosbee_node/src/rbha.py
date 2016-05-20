@@ -1,10 +1,13 @@
+#!/usr/bin/env python
+
 # swm data module and command handler
 # Implemented by HJ Kiela Opteq mechatronics BV Febr 2016
 # This module acts as command interface from any application to the smart wheel module and
 # holds a class representing the hardware model and status
 
 # import section
-from __future__ import unicode_literals, absolute_import, print_function, division
+#from __future__ import unicode_literals, absolute_import, print_function, division
+from __future__ import unicode_literals, print_function, division
 import serial
 import threading
 import time
@@ -100,6 +103,7 @@ class trb():
 # ---------- global variable with initialisation if needed -----
 rb1 = trb()  # create instance of wheel module
 debug = False  # set debugging info  on and off
+ser = None
 
 connected = False
 serial_free = True  # semaphore for serialport to avoid collisions from various processes
@@ -525,10 +529,8 @@ def init_serial():
 def receive():
     global ser
     data = ser.readline()
-    print ("receving data")
-    print (data)
     if len(data) > 0:
-        # print('in raw:' + str(data))
+        print('in raw:' + str(data))
         if (data[0] == 255):
             data[0] = 32
         data_decoded = data.decode('utf-8')  # decode to ascii
@@ -577,7 +579,8 @@ def send(linput):
     serial_free = False
     str = linput + '\r\n'  # add cr lf to string
     # print('ser ' + linput)
-    ser.write(outstr.encode('utf-8'))
+    #ser.write(outstr.encode('utf-8'))
+    ser.write(outstr)
     print ("sending data")
     print (outstr)
     serial_free = True

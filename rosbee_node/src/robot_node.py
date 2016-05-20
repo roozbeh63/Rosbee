@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-from nav_msgs.msg import Odometry
 import rospy
+from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Imu
 import tf
@@ -10,12 +10,10 @@ from math import sin, cos
 from covariances import \
     ODOM_POSE_COVARIANCE, ODOM_POSE_COVARIANCE2, ODOM_TWIST_COVARIANCE, ODOM_TWIST_COVARIANCE2
 import rosinterface
-import test3
+#import test3
+
 PACKAGE = 'rosbee_node'  # this package name
 NAME = 'robot_node'  # this node name
-
-
-
 
 class RobotNode(object):
     def __init__(self, name):

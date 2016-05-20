@@ -5,11 +5,13 @@
 #    Aug 09, 2015 11:16:18 PM
 # Configure communication
 
+from __future__ import unicode_literals, print_function, division
 import sys
 import glob
 import listports
 import json
 import os.path
+import inspect
 #import serial.tools.list_ports
 
 try:
@@ -24,7 +26,7 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = 1
 
-filename = 'serialconfig.txt'
+filename = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + '/serialconfig.txt'
 localserialconfig =  {"baudrate":"115200", "comport": "COM1"}
 cbaudrates = ('9600', '19200' , '38400', '57600','115200', '230400', '250000')  # possible baudrates
 
