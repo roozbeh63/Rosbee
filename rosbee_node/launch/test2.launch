@@ -1,4 +1,0 @@
-<launch>
-<node pkg="rosbee_node" type="robot_node.py" name="rosbee">
-</node>
-</launch>

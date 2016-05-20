@@ -1,4 +1,0 @@
-<launch>
-<node pkg="rosbee_node" type="test2.py" name="rosbee_node" output="screen">
-</node>
-</launch>
