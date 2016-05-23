@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import rospy
 from nav_msgs.msg import Odometry
+from diagnostic_msgs.msg import DiagnosticStatus, DiagnosticArray, KeyValue
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Imu
 import tf
@@ -10,7 +11,8 @@ from math import sin, cos
 from covariances import \
     ODOM_POSE_COVARIANCE, ODOM_POSE_COVARIANCE2, ODOM_TWIST_COVARIANCE, ODOM_TWIST_COVARIANCE2
 import rosinterface
-#import test3
+
+
 
 PACKAGE = 'rosbee_node'  # this package name
 NAME = 'robot_node'  # this node name
@@ -23,6 +25,7 @@ class RobotNode(object):
         self.req_cmd_vel = None
         self.robot.enable_robot()
         self._pos2d = Pose2D()
+        self.diag_msg = DiagnosticArray()
         self._init_params()
         self._init_pubsub()
         self.spin()
@@ -48,7 +51,7 @@ class RobotNode(object):
         self.cmd_vel_timeout = rospy.Duration(rospy.get_param('~cmd_vel_timeout', 0.6))
         self.min_abs_yaw_vel = rospy.get_param('~min_abs_yaw_vel', None)
         self.max_abs_yaw_vel = rospy.get_param('~max_abs_yaw_vel', None)
-
+        self.speedLimit = rospy.get_param('~speed_limit', 2)
         # odom: correction factors from calibration
         self.odom_angular_scale_correction = rospy.get_param('~odom_angular_scale_correction', 1.0)
         self.odom_linear_scale_correction = rospy.get_param('~odom_linear_scale_correction', 1.0)
@@ -80,6 +83,7 @@ class RobotNode(object):
         self.odom_pub = rospy.Publisher('odom', Odometry, queue_size=10)
         self.imu_pub = rospy.Publisher('imu', Imu, queue_size=10)
         self.cmd_vel_sub = rospy.Subscriber('/cmd_vel', Twist, self.cmd_vel)
+        self.pub_diagnostics = rospy.Publisher('/diagnostics', DiagnosticArray, queue_size=10)
         self.transform_broadcaster = None
         if self.publish_tf:
             self.transform_broadcaster = tf.TransformBroadcaster()
@@ -199,6 +203,81 @@ class RobotNode(object):
             odometry.header.stamp, odometry.child_frame_id, odometry.header.frame_id)
 
 
+    def publish_diagnostic(self):
+        self.diag_msg.header.stamp = rospy.Time.now()
+        self.diag_msg.status.append(self.battery_status())
+        #diag_msg.status.append(self.info_status())
+        # diag_msg.status.append(self.network_status())
+        self.diag_msg.status.append(self.connection_status())
+        self.diag_msg.status.append(self.speed_status())
+        self.pub_diagnostics.publish(self.diag_msg)
+        print (self.robot.request_enable_status())
+
+
+    def battery_status(self):
+        stat = DiagnosticStatus(name="Battery", level=DiagnosticStatus.OK, message="OK")
+        stat.values = [
+            KeyValue("Voltage avg(Vin)", str(self.robot.get_avg_voltageIn())),
+            KeyValue("Voltage max(Vin)", str(self.robot.get_max_voltageIn())),
+            KeyValue("Voltage min(Vin)", str(self.robot.get_min_voltageIn())),
+            KeyValue("Current avg(A)", str(self.robot.get_avg_current())),
+            KeyValue("Current max(A)", str(self.robot.get_avg_current())),
+            KeyValue("Current min(A)", str(self.robot.get_avg_current())),
+            KeyValue("Voltage avg(V5V)", str(self.robot.get_avg_5voltage())),
+            KeyValue("Voltage max(V5V)", str(self.robot.get_max_5voltage())),
+            KeyValue("Voltage min(V5V)", str(self.robot.get_min_5voltage())),
+            KeyValue("Voltage avg(V3.3)", str(self.robot.get_avg_3voltage())),
+            KeyValue("Voltage max(V3.3)", str(self.robot.get_max_3voltage())),
+            KeyValue("Voltage min(V3.3)", str(self.robot.get_min_3voltage()))]
+        if self.robot.get_status().VoltageLow == True:
+            stat.level = DiagnosticStatus.WARN
+            stat.message = "Voltage too low"
+        if self.robot.get_status().CurrentError == True:
+            stat.level = DiagnosticStatus.WARN
+            stat.message = "Current error"
+        if self.robot.get_status().Voltage3v3Low == True:
+            stat.level = DiagnosticStatus.WARN
+            stat.message = "Voltage3.3 too low"
+        return stat
+
+    def network_status(self):
+        stat = DiagnosticStatus(name="Network", level=DiagnosticStatus.OK, message="OK")
+        stat.values = [
+            KeyValue("Baudrate", str(self.robot.get_connection_info()[1])),
+            KeyValue("Comport", str(self.robot.get_connection_info()[3]))]
+        if self.robot.is_connected() == False:
+            stat.message = "disconnected"
+            stat.level = DiagnosticStatus.ERROR
+        return stat
+
+    def connection_status(self):
+        stat = DiagnosticStatus(name="Connection", level=DiagnosticStatus.OK, message="OK")
+        stat.values = [
+            KeyValue("Baudrate", str(self.robot.get_connection_info()["baudrate"])),
+            KeyValue("Comport", str(self.robot.get_connection_info()["comport"]))]
+        if self.robot.is_connected() == False:
+            stat.message = "disconnected"
+            stat.level = DiagnosticStatus.ERROR
+        return stat
+
+    def speed_status(self):
+        stat = DiagnosticStatus(name="Speed", level=DiagnosticStatus.OK, message="OK")
+        stat.values = [
+            KeyValue("Linear speed (Vx)", str(self.robot.get_movesteer(None)[0])),
+            KeyValue("Angular speed (Vth)", str(self.robot.get_movesteer(None)[2]))]
+        if self.robot.get_movesteer(None)[0] > self.speedLimit:
+            stat.level = DiagnosticStatus.WARN
+            stat.message = "speed is too high"
+        return stat
+
+    def info_status(self):
+        stat = DiagnosticStatus(name="Info_Platform", level=DiagnosticStatus.OK, message="OK")
+        stat.values = [
+            KeyValue("", str(self.robot.get_status()[0])),
+            KeyValue("", str(self.robot.get_status()[1])),
+            KeyValue("", str(self.robot.get_status()[2]))]
+        return stat
+
     def spin(self):
         odom = Odometry(header=rospy.Header(frame_id=self.odom_frame), child_frame_id=self.base_frame)
         imu = Imu(header=rospy.Header(frame_id=self.odom_frame))
@@ -245,6 +324,7 @@ class RobotNode(object):
             # PUBLISH ODOMETRY
             self.odom_pub.publish(odom)
             self.imu_pub.publish(imu)
+            self.publish_diagnostic()
             if self.publish_tf:
                 self.publish_odometry_transform(odom)
 

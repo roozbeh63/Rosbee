@@ -10,22 +10,22 @@ class SystemInfo(object):
         self.robot.init_robot()
         self.robot.enable_robot()
         rospy.init_node("sysinfo")
-        pub_diagnostics = rospy.Publisher('/diagnostics', DiagnosticArray, queue_size=10)
-        diag_msg = DiagnosticArray()
+        self.pub_diagnostics = rospy.Publisher('/diagnostics', DiagnosticArray, queue_size=10)
+        self.diag_msg = DiagnosticArray()
         self.update_rate = rospy.get_param('~update_rate', 50)
         self.speedLimit = rospy.get_param('~speed_limit', 10)
-        r = rospy.Rate(self.update_rate)
-        while not rospy.is_shutdown():
-            self.robot.get_update_from_rosbee()
-            diag_msg.header.stamp = rospy.Time.now()
-            diag_msg.status.append(self.battery_status())
-            #diag_msg.status.append(self.info_status())
-            # diag_msg.status.append(self.network_status())
-            diag_msg.status.append(self.connection_status())
-            diag_msg.status.append(self.speed_status())
-            pub_diagnostics.publish(diag_msg)
-            print (self.robot.request_enable_status())
-            r.sleep()
+
+    def publish_diagnostic(self):
+        self.robot.get_update_from_rosbee()
+        self.diag_msg.header.stamp = rospy.Time.now()
+        self.diag_msg.status.append(self.battery_status())
+        #diag_msg.status.append(self.info_status())
+        # diag_msg.status.append(self.network_status())
+        self.diag_msg.status.append(self.connection_status())
+        self.diag_msg.status.append(self.speed_status())
+        self.pub_diagnostics.publish(self.diag_msg)
+        print (self.robot.request_enable_status())
+
 
     def battery_status(self):
         stat = DiagnosticStatus(name="Battery", level=DiagnosticStatus.OK, message="OK")
