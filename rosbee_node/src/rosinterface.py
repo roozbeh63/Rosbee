@@ -40,8 +40,8 @@ def get_movesteer(gyro):
     for key, value in vel.iteritems():
         temp = [value]
         dictToList.append(temp[0])
-    if dictToList[0] <= 0:
-        dictToList[0] = 0.0
+    #if dictToList[0] <= 0:
+    #    dictToList[0] = 0.0
 
     vel = (dictToList[1], 0, dictToList[0])
     return vel

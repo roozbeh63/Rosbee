@@ -16,13 +16,13 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/rosbee_node$Http_rosinterface.coverage" NAME="Http_rosinterface Coverage Results" MODIFIED="1462800419811" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/rosbee_node$Http_node.coverage" NAME="Http_node Coverage Results" MODIFIED="1462281997921" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/rosbee_node$rosinterface.coverage" NAME="rosinterface Coverage Results" MODIFIED="1456498816865" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/rosbee_node$rosinterface.coverage" NAME="rosinterface Coverage Results" MODIFIED="1466096039508" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/rosbee_node$rbgui1.coverage" NAME="rbgui1 Coverage Results" MODIFIED="1456929764770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/rosbee_node$test2.coverage" NAME="test2 Coverage Results" MODIFIED="1463488089600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/rosbee_node$test.coverage" NAME="test Coverage Results" MODIFIED="1463480859197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/rosbee_node$sysinfo.coverage" NAME="sysinfo Coverage Results" MODIFIED="1461244205544" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/rosbee_node$robot_node.coverage" NAME="robot_node Coverage Results" MODIFIED="1463996759679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/rosbee_node$rbha.coverage" NAME="rbha Coverage Results" MODIFIED="1461594363131" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/rosbee_node$robot_node.coverage" NAME="robot_node Coverage Results" MODIFIED="1466096045316" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/rosbee_node$rbha.coverage" NAME="rbha Coverage Results" MODIFIED="1466095451283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/rosbee_node$SocketInterface.coverage" NAME="SocketInterface Coverage Results" MODIFIED="1460108232225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/rosbee_node$comportconfig.coverage" NAME="comportconfig Coverage Results" MODIFIED="1456928672640" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/rosbee_node$test3.coverage" NAME="test3 Coverage Results" MODIFIED="1459856118706" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
@@ -48,18 +48,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="robot_node.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="robot_node.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/robot_node.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44596133">
-              <caret line="88" column="66" selection-start-line="88" selection-start-column="66" selection-end-line="88" selection-end-column="66" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="148" column="26" selection-start-line="148" selection-start-column="26" selection-end-line="148" selection-end-column="26" />
               <folding>
                 <element signature="e#22#34#0" expanded="true" />
-                <element signature="e#1022#2986#0" expanded="false" />
-                <element signature="e#3501#4485#0" expanded="false" />
-                <element signature="e#4544#4647#0" expanded="false" />
                 <element signature="e#4727#5061#0" expanded="false" />
-                <element signature="e#5142#8305#0" expanded="false" />
                 <element signature="e#8368#8765#0" expanded="false" />
                 <element signature="e#9285#10789#0" expanded="false" />
                 <element signature="e#10829#11241#0" expanded="false" />
@@ -91,11 +87,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rosinterface.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="rosinterface.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/rosinterface.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.44459644">
+              <caret line="43" column="28" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
               <folding>
                 <element signature="e#23#34#0" expanded="true" />
               </folding>
@@ -107,7 +103,7 @@
         <entry file="file://$PROJECT_DIR$/src/rbha.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="554" column="16" selection-start-line="554" selection-start-column="4" selection-end-line="554" selection-end-column="16" />
+              <caret line="207" column="0" selection-start-line="207" selection-start-column="0" selection-end-line="207" selection-end-column="0" />
               <folding>
                 <element signature="e#371#436#0" expanded="true" />
               </folding>
@@ -145,11 +141,11 @@
         <option value="$PROJECT_DIR$/src/Http_rosinterface.py" />
         <option value="$PROJECT_DIR$/src/test2.py" />
         <option value="$PROJECT_DIR$/src/test.py" />
-        <option value="$PROJECT_DIR$/src/rosinterface.py" />
         <option value="$PROJECT_DIR$/src/rbha.py" />
         <option value="$PROJECT_DIR$/src/comportconfig_support.py" />
         <option value="$PROJECT_DIR$/src/sysinfo.py" />
         <option value="$PROJECT_DIR$/src/robot_node.py" />
+        <option value="$PROJECT_DIR$/src/rosinterface.py" />
       </list>
     </option>
   </component>
@@ -161,10 +157,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1" />
-    <option name="y" value="-4" />
-    <option name="width" value="1922" />
-    <option name="height" value="1011" />
+    <option name="x" value="-1920" />
+    <option name="y" value="24" />
+    <option name="width" value="1920" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -189,6 +185,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -237,8 +235,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -319,6 +315,24 @@
       <module name="rosbee_node" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/Http_rosinterface.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="rosinterface" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="rosbee_node" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/rosinterface.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -547,20 +561,22 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <list size="6">
+    <list size="7">
       <item index="0" class="java.lang.String" itemvalue="Python.robot_node" />
       <item index="1" class="java.lang.String" itemvalue="Python.test" />
       <item index="2" class="java.lang.String" itemvalue="Python.test2" />
       <item index="3" class="java.lang.String" itemvalue="Python.Http_node" />
       <item index="4" class="java.lang.String" itemvalue="Python.rbha" />
       <item index="5" class="java.lang.String" itemvalue="Python.Http_rosinterface" />
+      <item index="6" class="java.lang.String" itemvalue="Python.rosinterface" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Python.test2" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Http_rosinterface" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Http_node" />
-        <item index="3" class="java.lang.String" itemvalue="Python.rbha" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Python.rosinterface" />
+        <item index="1" class="java.lang.String" itemvalue="Python.rbha" />
+        <item index="2" class="java.lang.String" itemvalue="Python.test2" />
+        <item index="3" class="java.lang.String" itemvalue="Python.Http_rosinterface" />
+        <item index="4" class="java.lang.String" itemvalue="Python.Http_node" />
       </list>
     </recent_temporary>
   </component>
@@ -578,8 +594,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="-4" width="1922" height="1011" extended-state="6" />
-    <editor active="false" />
+    <frame x="-1920" y="24" width="1920" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -587,7 +603,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.153125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23397762" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22583927" sideWeight="0.49375" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31463146" sideWeight="0.50625" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -595,9 +613,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960325" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23432343" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22583927" sideWeight="0.49375" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
@@ -622,26 +638,6 @@
           <option name="timeStamp" value="76" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/robot_node.py</url>
-          <line>313</line>
-          <option name="timeStamp" value="82" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/rbha.py</url>
-          <line>203</line>
-          <option name="timeStamp" value="83" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/robot_node.py</url>
-          <line>319</line>
-          <option name="timeStamp" value="84" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/robot_node.py</url>
-          <line>110</line>
-          <option name="timeStamp" value="85" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/src/sysinfo.py</url>
           <line>79</line>
           <option name="timeStamp" value="88" />
@@ -651,6 +647,46 @@
           <line>15</line>
           <option name="timeStamp" value="89" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/src/robot_node.py</url>
+          <line>146</line>
+          <option name="timeStamp" value="92" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/src/rbha.py</url>
+          <line>206</line>
+          <option name="timeStamp" value="98" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/src/rbha.py</url>
+          <line>202</line>
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/src/robot_node.py</url>
+          <line>314</line>
+          <option name="timeStamp" value="100" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/src/robot_node.py</url>
+          <line>319</line>
+          <option name="timeStamp" value="101" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/src/robot_node.py</url>
+          <line>322</line>
+          <option name="timeStamp" value="102" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/src/rosinterface.py</url>
+          <line>45</line>
+          <option name="timeStamp" value="103" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/src/rosinterface.py</url>
+          <line>39</line>
+          <option name="timeStamp" value="104" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -659,7 +695,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="92" />
+      <option name="time" value="105" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -700,11 +736,7 @@
           <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
           <folding>
             <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#1022#2986#0" expanded="false" />
-            <element signature="e#3501#4485#0" expanded="false" />
-            <element signature="e#4544#4647#0" expanded="false" />
             <element signature="e#4727#5061#0" expanded="false" />
-            <element signature="e#5142#8305#0" expanded="false" />
             <element signature="e#8368#8765#0" expanded="false" />
             <element signature="e#9285#10789#0" expanded="false" />
             <element signature="e#10829#11241#0" expanded="false" />
@@ -752,11 +784,7 @@
           <caret line="121" column="29" selection-start-line="121" selection-start-column="29" selection-end-line="121" selection-end-column="29" />
           <folding>
             <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#1022#2986#0" expanded="false" />
-            <element signature="e#3501#4485#0" expanded="false" />
-            <element signature="e#4544#4647#0" expanded="false" />
             <element signature="e#4727#5061#0" expanded="false" />
-            <element signature="e#5142#8305#0" expanded="false" />
             <element signature="e#8368#8765#0" expanded="false" />
             <element signature="e#9285#10789#0" expanded="false" />
             <element signature="e#10829#11241#0" expanded="false" />
@@ -790,11 +818,7 @@
           <caret line="108" column="13" selection-start-line="108" selection-start-column="13" selection-end-line="108" selection-end-column="13" />
           <folding>
             <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#1022#2986#0" expanded="false" />
-            <element signature="e#3501#4485#0" expanded="false" />
-            <element signature="e#4544#4647#0" expanded="false" />
             <element signature="e#4727#5061#0" expanded="false" />
-            <element signature="e#5142#8305#0" expanded="false" />
             <element signature="e#8368#8765#0" expanded="false" />
             <element signature="e#9285#10789#0" expanded="false" />
             <element signature="e#10829#11241#0" expanded="false" />
@@ -828,11 +852,7 @@
           <caret line="108" column="13" selection-start-line="108" selection-start-column="13" selection-end-line="108" selection-end-column="13" />
           <folding>
             <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#1022#2986#0" expanded="false" />
-            <element signature="e#3501#4485#0" expanded="false" />
-            <element signature="e#4544#4647#0" expanded="false" />
             <element signature="e#4727#5061#0" expanded="false" />
-            <element signature="e#5142#8305#0" expanded="false" />
             <element signature="e#8368#8765#0" expanded="false" />
             <element signature="e#9285#10789#0" expanded="false" />
             <element signature="e#10829#11241#0" expanded="false" />
@@ -866,11 +886,7 @@
           <caret line="72" column="8" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="8" />
           <folding>
             <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#1022#2986#0" expanded="false" />
-            <element signature="e#3501#4485#0" expanded="false" />
-            <element signature="e#4544#4647#0" expanded="false" />
             <element signature="e#4727#5061#0" expanded="false" />
-            <element signature="e#5142#8305#0" expanded="false" />
             <element signature="e#8368#8765#0" expanded="false" />
             <element signature="e#9285#10789#0" expanded="false" />
             <element signature="e#10829#11241#0" expanded="false" />
@@ -901,11 +917,7 @@
           <caret line="80" column="28" selection-start-line="80" selection-start-column="28" selection-end-line="80" selection-end-column="28" />
           <folding>
             <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#1022#2986#0" expanded="false" />
-            <element signature="e#3501#4485#0" expanded="false" />
-            <element signature="e#4544#4647#0" expanded="false" />
             <element signature="e#4727#5061#0" expanded="false" />
-            <element signature="e#5142#8305#0" expanded="false" />
             <element signature="e#8368#8765#0" expanded="false" />
             <element signature="e#9285#10789#0" expanded="false" />
             <element signature="e#10829#11241#0" expanded="false" />
@@ -936,11 +948,7 @@
           <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
           <folding>
             <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#1022#2986#0" expanded="false" />
-            <element signature="e#3501#4485#0" expanded="false" />
-            <element signature="e#4544#4647#0" expanded="false" />
             <element signature="e#4727#5061#0" expanded="false" />
-            <element signature="e#5142#8305#0" expanded="false" />
             <element signature="e#8368#8765#0" expanded="false" />
             <element signature="e#9285#10789#0" expanded="false" />
             <element signature="e#10829#11241#0" expanded="false" />
@@ -964,11 +972,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#1022#2986#0" expanded="false" />
-            <element signature="e#3501#4485#0" expanded="false" />
-            <element signature="e#4544#4647#0" expanded="false" />
             <element signature="e#4727#5061#0" expanded="false" />
-            <element signature="e#5142#8305#0" expanded="false" />
             <element signature="e#8368#8765#0" expanded="false" />
             <element signature="e#9285#10789#0" expanded="false" />
             <element signature="e#10829#11241#0" expanded="false" />
@@ -1109,26 +1113,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/rosinterface.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <element signature="e#23#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/rbha.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="554" column="16" selection-start-line="554" selection-start-column="4" selection-end-line="554" selection-end-column="16" />
-          <folding>
-            <element signature="e#371#436#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/serialconfig.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1155,23 +1139,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/rbha.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="207" column="0" selection-start-line="207" selection-start-column="0" selection-end-line="207" selection-end-column="0" />
+          <folding>
+            <element signature="e#371#436#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/robot_node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44596133">
-          <caret line="88" column="66" selection-start-line="88" selection-start-column="66" selection-end-line="88" selection-end-column="66" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="148" column="26" selection-start-line="148" selection-start-column="26" selection-end-line="148" selection-end-column="26" />
           <folding>
             <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#1022#2986#0" expanded="false" />
-            <element signature="e#3501#4485#0" expanded="false" />
-            <element signature="e#4544#4647#0" expanded="false" />
             <element signature="e#4727#5061#0" expanded="false" />
-            <element signature="e#5142#8305#0" expanded="false" />
             <element signature="e#8368#8765#0" expanded="false" />
             <element signature="e#9285#10789#0" expanded="false" />
             <element signature="e#10829#11241#0" expanded="false" />
             <element signature="e#11284#11716#0" expanded="false" />
             <element signature="e#11754#12202#0" expanded="false" />
             <element signature="e#12239#12546#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/rosinterface.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44459644">
+          <caret line="43" column="28" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
+          <folding>
+            <element signature="e#23#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
