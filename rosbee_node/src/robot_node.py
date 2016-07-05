@@ -32,7 +32,7 @@ class RobotNode(object):
 
     def _init_params(self):
 
-        # node general
+        # node general		
         self.update_rate = rospy.get_param('~update_rate', 10)
         self.verbose = rospy.get_param('~verbose', True)
 
